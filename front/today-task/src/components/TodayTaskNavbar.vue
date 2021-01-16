@@ -1,6 +1,6 @@
 <template>
-  <v-app-bar app color="primary" dark>
-    <div class="text-h5">매일습관 - What to do?</div>
+  <v-app-bar app color="blue-grey darken-4" dark>
+    <div class="text-h5">매일공부습관 - What to do?</div>
   </v-app-bar>
 </template>
 
