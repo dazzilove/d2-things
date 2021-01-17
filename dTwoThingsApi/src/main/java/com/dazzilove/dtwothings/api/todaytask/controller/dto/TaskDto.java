@@ -1,11 +1,9 @@
-package com.dazzilove.dtwothings.api.todaytask.domain;
+package com.dazzilove.dtwothings.api.todaytask.controller.dto;
 
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
 @Data
-public class Task {
-    @Id
+public class TaskDto {
     private String id;
     private String subject;
     private String title;
