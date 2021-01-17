@@ -2,7 +2,7 @@
   <div>
     <div v-if="isRandomTaskShow"> 
       <v-card outlined v-if="isProgressShow">
-        <v-img :src="randomTask.imgSrc" height="250px"></v-img>
+        <v-img :src="'/image/' + randomTask.imgSrc" height="250px"></v-img>
         <v-card-title>
           <v-chip v-show="randomTask.state === 'done'" color="green" dark label small style="margin-right:5px">DONE</v-chip>
           <v-chip v-show="randomTask.state === 'except'" color="red" dark label small style="margin-right:5px">EXCEPT</v-chip>

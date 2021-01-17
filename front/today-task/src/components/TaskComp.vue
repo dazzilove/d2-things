@@ -25,7 +25,7 @@
           </v-list-item-group>
         </v-list-item-content>
         <img 
-          :src="task.imgSrc" 
+          :src="'/image/' + task.imgSrc" 
           :title="task.title"
           style="width:80px">
       </v-list-item>
