@@ -3,7 +3,7 @@
     <TodayTaskNavbar/>
     <v-main>
       <div style="margin: 15px;">
-        <TodayTask/>
+        <router-view></router-view>
       </div>
     </v-main>
     <TodayTaskFooter/>
