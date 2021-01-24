@@ -121,7 +121,14 @@ export default class RandomTaskComp extends Vue {
 
   public clearRandomTask() {
     this.isRandomTaskShow = false;
-    this.randomTask = {};
+    this.randomTask = {
+      id: '',
+      subject: '',
+      title: '',
+      desc: '',
+      imgSrc: '',
+      state: '',
+    };
   }
 
   public async changeRandomTask() {
