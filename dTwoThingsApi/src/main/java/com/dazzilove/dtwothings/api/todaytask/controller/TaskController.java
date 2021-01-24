@@ -80,7 +80,7 @@ public class TaskController {
         }
     }
 
-    @GetMapping("/api/todayTask/start")
+    @GetMapping("/api/todayTask/today/start")
     public ResponseEntity<TodayTask> startTodayTask() {
         try {
             return new ResponseEntity(todayTaskService.startTodayTask(), HttpStatus.OK);
@@ -89,7 +89,7 @@ public class TaskController {
         }
     }
 
-    @PostMapping("/api/todayTask/update")
+    @PostMapping("/api/todayTask/today/update")
     public ResponseEntity<TodayTask> updateTodayTask(@RequestBody TodayTask todayTask) {
         if (StringUtils.defaultString(todayTask.getId(), "").trim().length() == 0) {
             return new ResponseEntity("Fail", HttpStatus.INTERNAL_SERVER_ERROR);
