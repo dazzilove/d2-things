@@ -39,7 +39,11 @@ public class TodayTaskServiceImpl implements TodayTaskService {
         nowTodayTask.getTasks().stream().forEach(task -> {
             Task tempTask = todayTask.getTasks().stream().filter(item -> item.getId().equals(task.getId())).findFirst().orElse(null);
             if (tempTask != null) {
-                task.setState(tempTask.getState());
+                String state = tempTask.getState();
+                task.setState(state);
+                if ("done".equals(state)) {
+                    task.setDoneAt(new Date());
+                }
             }
         });
 
