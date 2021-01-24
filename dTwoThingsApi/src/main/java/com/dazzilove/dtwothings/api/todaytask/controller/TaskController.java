@@ -89,6 +89,18 @@ public class TaskController {
         }
     }
 
+    @GetMapping("/api/todayTask/today/{id}")
+    public ResponseEntity<TodayTask> getTodayTask(@PathVariable String id) {
+        if (StringUtils.defaultString(id, "").trim().length() == 0) {
+            return new ResponseEntity("Fail", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        try {
+            return new ResponseEntity(todayTaskService.getTodayTask(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity("Fail", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping("/api/todayTask/today/update")
     public ResponseEntity<TodayTask> updateTodayTask(@RequestBody TodayTask todayTask) {
         if (StringUtils.defaultString(todayTask.getId(), "").trim().length() == 0) {

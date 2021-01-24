@@ -6,4 +6,6 @@ public interface TodayTaskService {
     TodayTask startTodayTask();
 
     void updateTodayTask(TodayTask todayTask);
+
+    TodayTask getTodayTask(String id);
 }

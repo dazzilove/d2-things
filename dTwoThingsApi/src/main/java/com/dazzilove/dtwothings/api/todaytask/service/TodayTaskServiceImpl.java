@@ -49,4 +49,9 @@ public class TodayTaskServiceImpl implements TodayTaskService {
 
         todayTaskMongodbRepository.save(nowTodayTask);
     }
+
+    @Override
+    public TodayTask getTodayTask(String id) {
+        return todayTaskMongodbRepository.findById(id).orElse(new TodayTask());
+    }
 }
