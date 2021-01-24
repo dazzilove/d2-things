@@ -14,15 +14,6 @@ public class TaskServiceImpl implements TaskService {
     TaskMongodbRepository taskMongodbRepository;
 
     @Override
-    public void addTestTask() {
-        Task task = new Task();
-        task.setSubject("subject");
-        task.setTitle("title");
-        task.setDesc("desc");
-        taskMongodbRepository.save(task);
-    }
-
-    @Override
     public List<Task> getTasks() {
         return taskMongodbRepository.findAll();
     }

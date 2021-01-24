@@ -5,9 +5,7 @@ import com.dazzilove.dtwothings.api.todaytask.domain.Task;
 import java.util.List;
 
 public interface TaskService {
-    void addTestTask();
-
-    public List<Task> getTasks();
+    List<Task> getTasks();
 
     void addTask(Task task);
 
