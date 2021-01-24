@@ -13,4 +13,8 @@ public class Task {
     private String imgSrc;
     private String state;
     private String delYn;
+
+    public boolean isDelete() {
+        return "Y".equals(this.delYn);
+    }
 }

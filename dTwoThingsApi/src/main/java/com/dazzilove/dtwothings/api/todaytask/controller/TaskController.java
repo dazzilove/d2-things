@@ -2,7 +2,9 @@ package com.dazzilove.dtwothings.api.todaytask.controller;
 
 import com.dazzilove.dtwothings.api.todaytask.controller.dto.TaskDto;
 import com.dazzilove.dtwothings.api.todaytask.domain.Task;
+import com.dazzilove.dtwothings.api.todaytask.domain.TodayTask;
 import com.dazzilove.dtwothings.api.todaytask.service.TaskService;
+import com.dazzilove.dtwothings.api.todaytask.service.TodayTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,8 @@ public class TaskController {
 
     @Autowired
     TaskService taskService;
+    @Autowired
+    TodayTaskService todayTaskService;
 
     @GetMapping("/api/todayTask/tasks")
     public ResponseEntity<List<Task>> getTasks() {
@@ -70,6 +74,15 @@ public class TaskController {
         try {
             taskService.delTask(task);
             return new ResponseEntity("OK", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity("Fail", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/api/todayTask/start")
+    public ResponseEntity<TodayTask> startTodayTask() {
+        try {
+            return new ResponseEntity(todayTaskService.startTodayTask(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity("Fail", HttpStatus.INTERNAL_SERVER_ERROR);
         }

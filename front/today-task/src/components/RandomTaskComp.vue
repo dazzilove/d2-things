@@ -11,13 +11,28 @@
         <v-card-subtitle>{{ randomTask.desc }}</v-card-subtitle>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn outlined color="primary" small @click="onClickExceptBtn(randomTask.id)">
+          <v-btn 
+            outlined 
+            color="primary" 
+            small 
+            :disabled="!isTaskStarted"
+            @click="onClickExceptBtn(randomTask.id)">
             Except
           </v-btn>
-          <v-btn outlined color="primary" small @click="onClickDoneBtn(randomTask.id)">
+          <v-btn 
+            outlined 
+            color="primary" 
+            small 
+            :disabled="!isTaskStarted"
+            @click="onClickDoneBtn(randomTask.id)">
             Done
           </v-btn>
-          <v-btn outlined color="primary" small @click="onClickRedoBtn(randomTask.id)">
+          <v-btn 
+            outlined 
+            color="primary" 
+            small 
+            :disabled="!isTaskStarted"
+            @click="onClickRedoBtn(randomTask.id)">
             Redo
           </v-btn>
         </v-card-actions>
@@ -41,7 +56,7 @@
       depressed
       color="primary"
       style="width: 100%; margin-top: 5px"
-      :disabled="isTaskAllClear"
+      :disabled="isTaskAllClear || !isTaskStarted"
       @click="onClickRandomBtn"
     >
       What to do? ({{clearTaskCount}}/{{allTaskCount}})
@@ -76,6 +91,10 @@ export default class RandomTaskComp extends Vue {
 
   get isTaskAllClear() {
     return tasks.workList.length === 0;
+  }
+
+  get isTaskStarted() {
+    return tasks.isTaskStarted;
   }
 
   @Watch('tasks')

@@ -1,0 +1,7 @@
+package com.dazzilove.dtwothings.api.todaytask.service;
+
+import com.dazzilove.dtwothings.api.todaytask.domain.TodayTask;
+
+public interface TodayTaskService {
+    TodayTask startTodayTask();
+}
