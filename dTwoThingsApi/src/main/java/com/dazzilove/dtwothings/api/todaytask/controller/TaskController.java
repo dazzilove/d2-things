@@ -16,17 +16,6 @@ public class TaskController {
     @Autowired
     TaskService taskService;
 
-    @GetMapping("/api/todayTask/test")
-    public String test() {
-        return "test";
-    }
-
-    @GetMapping("/api/todayTask/add")
-    public String add() {
-        taskService.addTestTask();
-        return "success";
-    }
-
     @GetMapping("/api/todayTask/tasks")
     public ResponseEntity<List<Task>> getTasks() {
         try {
