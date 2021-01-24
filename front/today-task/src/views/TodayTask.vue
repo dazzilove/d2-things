@@ -63,7 +63,7 @@ export default class TodayTask extends Vue {
   public async startTodayTask() {
     const response: AxiosResponse = await AxiosService.instance.get('/api/todayTask/start');
     if (response.status === 200) {
-      tasks.setTodayTasks(response.data.tasks);
+      tasks.setTodayTasks(response.data);
       tasks.startTodayTask();
     } else {
       alert('faile');

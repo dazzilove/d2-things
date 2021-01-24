@@ -105,7 +105,8 @@ class TasksModule extends VuexModule {
 
   @Mutation
   public setTasks(param: any) {
-    this.taskList = param;
+    this.taskList = param.tasks;
+    this.todayTaskId = param.todayTaskid;
   }
 
   @Action({ commit: 'changeState' })
@@ -125,7 +126,7 @@ class TasksModule extends VuexModule {
 
   @Action({ commit: 'setTasks' })
   public setTodayTasks(param: any) {
-    return param;
+    return { todayTaskId: param.id, tasks: param.tasks };
   }
 
 }
