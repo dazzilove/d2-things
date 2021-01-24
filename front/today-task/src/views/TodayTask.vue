@@ -15,7 +15,7 @@
     </div>
     <v-row no-gutters>
       <v-col cols="12" xs="12" sm="5" class="defaultColPadding">
-        <RandomTaskComp />
+        <RandomTaskComp ref="randomTaskComp" />
       </v-col>
       <v-col cols="12" xs="12" sm="7" class="defaultColPadding">
         <TaskComp 
@@ -58,10 +58,11 @@ export default class TodayTask extends Vue {
 
   public restartTodayTask() {
       tasks.restartTodayTask();
+      this.$refs.randomTaskComp.clearRandomTask();
   }
 
   public async startTodayTask() {
-    const response: AxiosResponse = await AxiosService.instance.get('/api/todayTask/start');
+    const response: AxiosResponse = await AxiosService.instance.get('/api/todayTask/today/start');
     if (response.status === 200) {
       tasks.setTodayTasks(response.data);
       tasks.startTodayTask();

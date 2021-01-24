@@ -21,6 +21,7 @@ store.unregisterModule(name);
   dynamic: true,
 })
 class TasksModule extends VuexModule {
+  public isSuccessChangeState: boolean = true;
   public isTaskStarted: boolean = false;
   public todayTaskId: string = '';
   public taskList: Task[] = [
@@ -82,6 +83,10 @@ class TasksModule extends VuexModule {
     return this.taskList.length;
   }
 
+  get isSuccessChange() {
+    return this.isSuccessChangeState;
+  }
+
   @Mutation
   public async changeState(param: any) {
     for (const task of this.taskList) {
@@ -92,14 +97,14 @@ class TasksModule extends VuexModule {
       //   ', title=' + task.title +
       //   ', state=' + task.state);
     }
-    const response: AxiosResponse = await AxiosService.instance.post('/api/todayTask/update', {
+    const response: AxiosResponse = await AxiosService.instance.post('/api/todayTask/today/update', {
       id: this.todayTaskId,
       tasks: this.taskList,
     });
     if (response.status === 200) {
-      console.log('changeStateAtDB success')
+      this.isSuccessChangeState = true;
     } else {
-      alert('changeStateAtDB fail')
+      this.isSuccessChangeState = false;
     }
   }
 
@@ -120,6 +125,17 @@ class TasksModule extends VuexModule {
     this.todayTaskId = param.todayTaskId;
   }
 
+  @Mutation
+  public async reloadTasks() {
+    const response: AxiosResponse = await AxiosService.instance.get('/api/todayTask/today/' + this.todayTaskId);
+    if (response.status === 200) {
+      this.taskList = [];
+      this.taskList.push(...response.data.tasks);
+    } else {
+      console.log('fail');
+    }
+  }
+
   @Action({ commit: 'changeState' })
   public changeTaskState(param: any) {
     return { id: param.id, state: param.state };
@@ -138,6 +154,11 @@ class TasksModule extends VuexModule {
   @Action({ commit: 'setTasks' })
   public setTodayTasks(param: any) {
     return { todayTaskId: param.id, tasks: param.tasks };
+  }
+
+  @Action({ commit: 'reloadTasks' })
+  public reloadTodayTasks() {
+    return;
   }
 
 }

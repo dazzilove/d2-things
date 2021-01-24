@@ -61,6 +61,20 @@
     >
       What to do? ({{clearTaskCount}}/{{allTaskCount}})
     </v-btn>
+
+    <v-snackbar v-model="snackbar">
+      {{ snackbarMessage }}
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="pink"
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -81,6 +95,9 @@ export default class RandomTaskComp extends Vue {
   public randomTask!: Task;
   public allTaskCount: number = 0;
 
+  public snackbar: boolean =  false;
+  public snackbarMessage: string = '';
+
   public created() {
     this.allTaskCount = tasks.allTaskCount;
   }
@@ -100,6 +117,11 @@ export default class RandomTaskComp extends Vue {
   @Watch('tasks')
   public onTaskListChange(newTasks: Task[], oldTasks: Task[]) {
     console.log('onTaskListChange');
+  }
+
+  public clearRandomTask() {
+    this.isRandomTaskShow = false;
+    this.randomTask = {};
   }
 
   public async changeRandomTask() {
@@ -139,7 +161,14 @@ export default class RandomTaskComp extends Vue {
   }
 
   public async changeTaskState(id: string, state: string) {
-    tasks.changeTaskState({id, state});
+    await tasks.changeTaskState({id, state});
+    if (tasks.isSuccessChange) {
+      this.snackbarMessage = '상태가 변경되었습니다.';
+    } else {
+      this.snackbarMessage = '상태변경에 실패 했습니다. 목록을 재조회 합니다.';
+      tasks.reloadTodayTasks();
+    }
+    this.snackbar = true;
     this.randomTask.state = state;
   }
 

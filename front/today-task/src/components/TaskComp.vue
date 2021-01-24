@@ -30,6 +30,20 @@
           style="width:80px">
       </v-list-item>
     </v-card>
+
+    <v-snackbar v-model="snackbar">
+      {{ snackbarMessage }}
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="pink"
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -42,6 +56,9 @@ import tasks from '@/store/modules/tasks';
 export default class TaskComp extends Vue {
   @Prop() public taskId?: string;
   public task!: Task;
+
+  public snackbar: boolean =  false;
+  public snackbarMessage: string = '';
 
   public created() {
     this.resetTask();
@@ -65,7 +82,14 @@ export default class TaskComp extends Vue {
   }
 
   public async changeTaskState(id: string, state: string) {
-    tasks.changeTaskState({id, state});
+    await tasks.changeTaskState({id, state});
+    if (tasks.isSuccessChange) {
+      this.snackbarMessage = '상태가 변경되었습니다.';
+    } else {
+      this.snackbarMessage = '상태변경에 실패 했습니다. 목록을 재조회 합니다.';
+      tasks.reloadTodayTasks();
+    }
+    this.snackbar = true;
     this.task.state = state;
   }
 }
