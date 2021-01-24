@@ -6,6 +6,8 @@ import {
   MutationAction,
   VuexModule,
 } from 'vuex-module-decorators';
+import AxiosService from '@/service/axios.service';
+import AxiosResponse from '@/service/axios.service';
 import store from '@/store';
 import { Task } from '../models';
 
@@ -81,15 +83,23 @@ class TasksModule extends VuexModule {
   }
 
   @Mutation
-  public changeState(param: any) {
-    console.log('changeState');
+  public async changeState(param: any) {
     for (const task of this.taskList) {
       if (task.id === param.id) {
         task.state = param.state;
       }
-      console.log('id=' + task.id +
-        ', title=' + task.title +
-        ', state=' + task.state);
+      // console.log('id=' + task.id +
+      //   ', title=' + task.title +
+      //   ', state=' + task.state);
+    }
+    const response: AxiosResponse = await AxiosService.instance.post('/api/todayTask/update', {
+      id: this.todayTaskId,
+      tasks: this.taskList,
+    });
+    if (response.status === 200) {
+      console.log('changeStateAtDB success')
+    } else {
+      alert('changeStateAtDB fail')
     }
   }
 
@@ -101,12 +111,13 @@ class TasksModule extends VuexModule {
   @Mutation
   public restartTask() {
     this.isTaskStarted = false;
+    this.taskList = [];
   }
 
   @Mutation
   public setTasks(param: any) {
     this.taskList = param.tasks;
-    this.todayTaskId = param.todayTaskid;
+    this.todayTaskId = param.todayTaskId;
   }
 
   @Action({ commit: 'changeState' })

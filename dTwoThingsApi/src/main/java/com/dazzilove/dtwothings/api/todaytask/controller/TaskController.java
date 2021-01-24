@@ -5,6 +5,7 @@ import com.dazzilove.dtwothings.api.todaytask.domain.Task;
 import com.dazzilove.dtwothings.api.todaytask.domain.TodayTask;
 import com.dazzilove.dtwothings.api.todaytask.service.TaskService;
 import com.dazzilove.dtwothings.api.todaytask.service.TodayTaskService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -83,6 +84,19 @@ public class TaskController {
     public ResponseEntity<TodayTask> startTodayTask() {
         try {
             return new ResponseEntity(todayTaskService.startTodayTask(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity("Fail", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/api/todayTask/update")
+    public ResponseEntity<TodayTask> updateTodayTask(@RequestBody TodayTask todayTask) {
+        if (StringUtils.defaultString(todayTask.getId(), "").trim().length() == 0) {
+            return new ResponseEntity("Fail", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        try {
+            todayTaskService.updateTodayTask(todayTask);
+            return new ResponseEntity("success", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity("Fail", HttpStatus.INTERNAL_SERVER_ERROR);
         }

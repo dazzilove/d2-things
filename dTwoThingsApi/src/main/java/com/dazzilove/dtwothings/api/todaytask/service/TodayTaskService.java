@@ -4,4 +4,6 @@ import com.dazzilove.dtwothings.api.todaytask.domain.TodayTask;
 
 public interface TodayTaskService {
     TodayTask startTodayTask();
+
+    void updateTodayTask(TodayTask todayTask);
 }
