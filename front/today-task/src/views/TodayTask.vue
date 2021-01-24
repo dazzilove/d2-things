@@ -5,7 +5,13 @@
         block 
         color="primary" 
         :disabled="isTaskStarted"
+        v-show="!isTaskStarted"
         @click="startTodayTask">{{ startTodayTaskText }}</v-btn>
+      <v-btn 
+        v-show="isTaskStarted"
+        block
+        color="secondary"
+        @click="restartTodayTask">reset</v-btn>
     </div>
     <v-row no-gutters>
       <v-col cols="12" xs="12" sm="5" class="defaultColPadding">
@@ -48,6 +54,10 @@ export default class TodayTask extends Vue {
       return 'Daily Todo started!'
     else 
       return 'Daily Todo start!'
+  }
+
+  public restartTodayTask() {
+      tasks.restartTodayTask();
   }
 
   public async startTodayTask() {

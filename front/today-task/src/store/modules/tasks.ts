@@ -99,6 +99,11 @@ class TasksModule extends VuexModule {
   }
 
   @Mutation
+  public restartTask() {
+    this.isTaskStarted = false;
+  }
+
+  @Mutation
   public setTasks(param: any) {
     this.taskList = param;
   }
@@ -110,6 +115,11 @@ class TasksModule extends VuexModule {
 
   @Action({ commit: 'startTask' })
   public startTodayTask() {
+    return;
+  }
+
+  @Action({ commit: 'restartTask' })
+  public restartTodayTask() {
     return;
   }
 
